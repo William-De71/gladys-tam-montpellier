@@ -5,7 +5,7 @@ follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions
 follow [Semantic Versioning](https://semver.org/). This file is generated at
 each release from the Conventional Commits: do not edit it by hand.
 
-## [0.1.0] - unreleased
+## [0.1.0] - 2026-10-27
 
 ### Added
 
@@ -17,3 +17,5 @@ each release from the Conventional Commits: do not edit it by hand.
 - Configuration actions: test the connection, find a stop by name (with the codes of its platforms and its lines), add, list and remove stops, and a diagnostic written to the Logs tab.
 - Cloud transport: the official open data of the TaM (GTFS and GTFS-RT), no account and no key; the timetable downloaded once a day when it changed and kept in /data, the real time of every followed stop in one request every 30 seconds to 5 minutes, the alerts every 5 minutes.
 - English, French, German and Spanish everywhere: settings, devices, widgets, scenes and documentation.
+
+[0.1.0]: https://github.com/William-De71/gladys-tam-montpellier/releases/tag/v0.1.0
