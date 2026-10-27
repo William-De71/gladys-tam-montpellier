@@ -1,0 +1,46 @@
+route_id,route_short_name,route_long_name,route_type,agency_id,route_color,route_text_color
+10,10,Cimetière St-Lazare - Celleneuve,3,TAM,FBBA00,000000
+11,11,La Martelle - Tournezy,3,TAM,5FC3E1,000000
+13,13,Occitanie - Charles de Gaulle,3,TAM,941B80,FFFFFF
+14,14,Léon Blum - Place de l'Europe,3,TAM,F08178,000000
+15,15,Gare Sud de France - Sabines,3,TAM,BF0D0D,FFFFFF
+16,16,Ch. de Gaulle - Port Marianne,3,TAM,009EE2,FFFFFF
+17,17,Les Bouisses - Gare Saint-Roch,3,TAM,BDAE00,000000
+18,18,Sabines - Maurin - Lattes Centre,3,TAM,E84E24,FFFFFF
+1,1,Mosson - Gare Sud de France,0,TAM,005CA9,FFFFFF
+19,19,P. Coubertin - Hôtel Département,3,TAM,FFD400,000000
+20,20,St-Jean le Sec - Parc Font-Colombe,3,TAM,009EE2,FFFFFF
+21,21,ND de Sablassou - Vendargues,3,TAM,FFE500,000000
+22,22,Cirad de Baillarguet - Clapiers - Jacou,3,TAM,81CFF4,000000
+23,23,Clapiers - Prades-le-Lez,3,TAM,EF7D00,FFFFFF
+24,24,Grabels: La Valsière - Le Pradas,3,TAM,A61680,FFFFFF
+25,25,Courpouyran - Le Martinet,3,TAM,904E00,FFFFFF
+26,26,Montferrier-sur-Lez - Montferrier Olympe/Cirad,3,TAM,306980,FFFFFF
+27,27,Stade de Montaud- Gare de Baillargues,3,TAM,914F00,FFFFFF
+28,28,Boirargues - Cabanes Perols,3,TAM,F29100,FFFFFF
+2,2,St-Jean de Védas Centre - Jacou,0,TAM,EF7D00,FFFFFF
+30,30,Le Crès Jean Jaurès / Le Crès Maumarin,3,TAM,F4B4D2,000000
+31,31,ND Sablassou - Baillargues via Sussargues/StGeniès,3,TAM,8A9400,FFFFFF
+32,32,Garcia Lorca - Villeneuve-lès-M./Saint-Jean de V.,3,TAM,008288,FFFFFF
+33,33,St-Jean de Védas (Centre)-Fabrègues,3,TAM,C7D300,000000
+34,34,Mosson - Cournonsec,3,TAM,729957,FFFFFF
+35,35,Ch. de Gaulle-A.Rouge/Aires,3,TAM,164194,FFFFFF
+36,36,Charles de Gaulle - Cap Alpha - Stade de Montaud,3,TAM,E20613,FFFFFF
+38,38,Grés de Montpellier - Cournonsec,3,TAM,8C004C,FFFFFF
+3,3,Juvignac - Lattes / Pérols,0,TAM,C8D400,000000
+40,40,Mosson - St-Georges d'Orques,3,TAM,FFDC00,000000
+42,42,Mosson - Murviel lès Montpellier,3,TAM,E5007E,FFFFFF
+43,43,St-Jean-le-Sec - Saussan - Pignan,3,TAM,FABC43,000000
+44,44,Navette Gare Villeneuve-les-M.,3,TAM,F193BD,000000
+46,46,ND Sablassou - Castries College,3,TAM,7A1C79,FFFFFF
+47,47,Université Montpellier Triolet,3,TAM,B5C952,000000
+4,4,Garcia Lorca - Garcia Lorca,0,TAM,4B2A0E,FFFFFF
+52,52,Pl. de France - Cim. St.Etienne,3,TAM,FFE500,000000
+53,53,Sabines - Saint-Cléophas,3,TAM,95C11F,000000
+5,5,Clapiers - Grès de Montpellier,0,TAM,287431,FFFFFF
+6,6,Euromédecine - Albert 1er,3,TAM,E94190,FFFFFF
+7,7,Hôtel du Département - Albert 1e,3,TAM,A877B2,FFFFFF
+Amigo,Amigo,Amigo,3,TAM,1C1B51,FFFFFF
+8,8,Centrayrargues - Gare Saint-Roch,3,TAM,FFDC00,000000
+91,91,Substitution Ligne 1,3,TAM,CA3179,FFFFFF
+A,A,ND de Sablassou-Pl. de l'Europe,3,TAM,841932,FFFFFF

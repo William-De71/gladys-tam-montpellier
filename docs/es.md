@@ -1,0 +1,85 @@
+# TaM Montpellier
+
+## Presentación
+
+Esta integración lleva la **TaM**, los tranvías y autobuses de Montpellier Méditerranée Métropole, a Gladys. Da las **próximas salidas, corregidas en tiempo real, con su retraso**, en las paradas que elijas (tres en el formulario, hasta 10 más con un botón), filtradas por línea y dirección. También sigue el **tráfico** de hasta seis líneas (normal, aviso de tráfico, alterado, muy alterado), con las alertas de TaM: desvíos, paradas sin servicio, obras. Cada parada y cada línea se convierte en un dispositivo para mostrar en un panel y usar en escenas.
+
+Los datos proceden de los **datos abiertos oficiales de TaM**, publicados en `transport.data.gouv.fr` con licencia ODbL: sin cuenta ni clave. Cubren las líneas urbanas y suburbanas. El **horario** (GTFS) se descarga una vez al día si cambió, y la integración lo guarda. El **tiempo real** (GTFS-RT) de toda la red se lee en **una sola petición para todas las paradas seguidas**, cada minuto por defecto (cada 10 minutos mientras ninguna parada anuncie nada en la próxima media hora, de noche). Las alertas se leen cada 5 minutos.
+
+Una salida se **sigue en tiempo real** en cuanto el vehículo sale de su cabecera: se dan su hora estimada y su retraso. Antes, es el **horario teórico**, marcado «(teórico)». Se indican los **viajes suprimidos** y las **paradas sin servicio**.
+
+Es una integración **cloud**: contacta con `gtfsproxy.e-tam.fr`. Nada más sale de tu red.
+
+## Requisitos
+
+- Gladys Assistant 5.3.0 o posterior.
+- Nada más: los datos abiertos de TaM no piden cuenta ni clave.
+
+## Configuración
+
+| Campo                   | Qué escribir                                                                                                            |
+| ----------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| Parada 1, 2, 3          | El nombre de la parada tal como aparece en ella («Comédie», «Gare Saint-Roch») o el código de un andén («41115»).       |
+| Línea                   | Solo esta línea: «1», «6», «Amigo». Vacío: todas las líneas de la parada.                                               |
+| Dirección               | Solo los destinos que contienen estas palabras: «Gare Sud», «Jacou \| Sabines». Vacío: ambos sentidos.                  |
+| Líneas seguidas         | Las líneas cuyo tráfico sigues, seis como máximo: «1, 2, 6, 17».                                                        |
+| Lectura del tiempo real | Cada 30 segundos, cada minuto, cada 2 minutos o cada 5 minutos.                                                         |
+| Idioma de los textos    | Nombres de los dispositivos, resúmenes y salidas de las escenas. Los nombres de paradas y los avisos quedan en francés. |
+
+Una parada reúne todos los andenes de su nombre, tranvías y autobuses: «Comédie» da ambos sentidos de los tranvías 1, 2 y 3. El botón **Buscar una parada** da las paradas que contienen unas palabras, con los códigos de sus andenes y sus líneas («Gare Saint-Roch [41135, 41221] → 1, 2, 3»). Unas pocas palabras bastan cuando solo una parada las contiene («rondel» → Rondelet). **Probar la conexión** vuelve a pedir el horario y lee al momento cada parada y cada línea.
+
+Una línea se escribe como en el vehículo: «1» a «5» para los tranvías, «6», «17», «A», «Amigo»…
+
+Más paradas que las tres del formulario (casa, trabajo, colegio…): **Añadir una parada** toma los mismos tres campos — parada, línea, dirección — y sigue hasta 10 paradas más. **Listar las paradas** muestra todas las paradas seguidas, numeradas; **Quitar una parada** toma ese número (o el nombre). Las paradas añadidas se guardan en la configuración de Gladys, y por tanto en sus copias de seguridad.
+
+## Uso
+
+### Dispositivos
+
+En la pestaña **Descubrir**, crea los dispositivos que quieras:
+
+- **TaM \<parada\>**: la próxima salida en texto («1 → Gare Sud France · 3 min (+2 min de retraso)»), la espera de la próxima salida y de la siguiente (minutos), y el retraso de la próxima (minutos, publicado solo cuando se sigue en tiempo real);
+- **TaM tranvía 1**, **TaM línea 17**…: el tráfico en texto («Tráfico alterado: Rugby : La ligne 17 est déviée.») y el número de avisos de tráfico en curso.
+
+De noche, sin salidas en las próximas tres horas, el dispositivo muestra la primera salida de la mañana.
+
+### Tráfico
+
+TaM publica **alertas**: un texto, las líneas (o paradas) afectadas y sus periodos. El estado de una línea viene de su alerta más grave en curso: **muy alterado** para una interrupción, **alterado** para un desvío, paradas sin servicio o retrasos, **aviso de tráfico** en otro caso; **normal** sin alerta. Una alerta que empieza en los próximos tres días se muestra como próxima.
+
+### Widgets del panel
+
+![El widget Salidas TaM en Gare Saint-Roch y el widget Tráfico TaM de los tranvías y de líneas de autobús (ilustración generada, no una captura de pantalla)](https://raw.githubusercontent.com/William-De71/gladys-tam-montpellier/main/docs/assets/widgets.es.png)
+
+- **Salidas TaM**: las próximas salidas de una parada, en compacto. Una fila por línea y destino, con sus próximas salidas seguidas («2 · 17 min»). Un viaje suprimido se muestra («suprimido 22:48») y pone la fila en naranja, como un retraso de 5 minutos o más. El ajuste **Trayectos mostrados** fija el número de filas. Elige una parada seguida, o escribe cualquier parada (y una línea) en los ajustes del widget. Con **Varias paradas**, un widget muestra varios dispositivos de parada: los de una misma parada se reúnen bajo su nombre; para paradas distintas, cada parada empieza con una fila propia.
+- **Tráfico TaM**: el estado de cada línea, luego las alertas en curso y las de los próximos tres días, con su periodo. Toca una tarjeta para ver el texto completo. Las líneas seguidas, las escritas en los ajustes, o las cinco líneas de tranvía si no sigues ninguna.
+
+### Escenas
+
+Desencadenantes, una vez por cambio (la primera lectura solo sirve de referencia):
+
+- **TaM: salida en breve**: una salida de una parada seguida sale dentro de 2, 3, 5, 10, 15 o 20 minutos, contados según su estimación en tiempo real.
+- **TaM: salida suprimida**: un viaje de la próxima hora en una parada seguida se suprime, o no para en ella.
+- **TaM: línea alterada**: una línea seguida pasa a alterada o muy alterada.
+- **TaM: fin de la incidencia**: ya no hay incidencias en curso en la línea.
+- **TaM: nuevo aviso de tráfico**: TaM publica una alerta sobre una línea seguida, en curso o próxima.
+
+Cada uno da una frase lista, `{{triggerEvent.data.summary}}`, y sus valores (línea, destino, hora, retraso, título, texto, inicio y fin…). Las acciones **TaM: próximas salidas** y **TaM: tráfico de una línea** devuelven el mismo tipo de valores, para un mensaje o una condición.
+
+Ejemplos:
+
+- Cuando el tranvía 1 hacia Gare Sud France sale de Comédie dentro de 5 minutos → poner en verde la lámpara de la entrada.
+- Cuando se suprime una salida de tu parada, o la línea 17 se desvía → enviar el resumen a tu móvil antes de salir.
+- Cada día laborable a las 7:30 → leer las próximas salidas de tu parada y que el altavoz de la cocina las anuncie.
+
+### Transporte
+
+Solo cloud: los datos vienen de internet. El horario una vez al día, el tiempo real de toda la red en una petición, las alertas cada 5 minutos.
+
+## Solución de problemas
+
+- **«Desconocido o ambiguo»**: usa **Buscar una parada** y copia el nombre exacto o un código de andén; para una línea, su nombre como en el vehículo («1», «17», «Amigo»).
+- **«(teórico)» tras una salida**: el vehículo aún no ha salido de su cabecera, o TaM no lo sigue; la hora es la del horario.
+- **Ninguna salida en la dirección escrita**: los destinos son los que figuran en los vehículos («Gare Sud France», «Occitanie»); vacía la dirección para verlos todos.
+- **«Los datos abiertos de TaM no responden»**: la integración vuelve a intentarlo en cada lectura; mientras tanto, las salidas vienen del horario guardado.
+- **Para informar de un problema**: pulsa **Diagnóstico** y copia las líneas que empiezan por «TaM diagnostic» de la pestaña Registros en un issue de GitHub o una respuesta en el foro, con las versiones de Gladys y de la integración.

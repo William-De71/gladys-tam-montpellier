@@ -1,0 +1,18 @@
+Gladys TaM Montpellier integration
+Copyright 2026 William Deren
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+
+The timetable (GTFS), the real-time trip updates and the service alerts
+(GTFS-RT) come from the open data of the TaM, the public transport of
+Montpellier Méditerranée Métropole, published on
+https://transport.data.gouv.fr/datasets/offre-de-transport-tam-en-temps-reel-gtfs-rt-urbain-et-suburbain
+under the Open Database License (ODbL) 1.0:
+https://opendatacommons.org/licenses/odbl/1-0/. Source: TaM, Montpellier
+Méditerranée Métropole. The widgets show the source (TaM) and the time of
+each reading. The files under test/fixtures are extracts of these data, kept
+under the same licence.
+
+This community integration is not affiliated with, endorsed or sponsored by
+TaM (Transports de l'agglomération de Montpellier) or Montpellier Méditerranée
+Métropole.
