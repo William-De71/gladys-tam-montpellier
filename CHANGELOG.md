@@ -5,6 +5,12 @@ follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions
 follow [Semantic Versioning](https://semver.org/). This file is generated at
 each release from the Conventional Commits: do not edit it by hand.
 
+## [0.2.0] - 2026-11-10
+
+### Added
+
+- show the next two departures of each line, each with its unit, in the departures widget ([#2](https://github.com/William-De71/gladys-tam-montpellier/pull/2), [f530a97](https://github.com/William-De71/gladys-tam-montpellier/commit/f530a9736710e10884d8a39a4b1ff9a25a744218))
+
 ## [0.1.0] - 2026-10-27
 
 ### Added
@@ -18,4 +24,5 @@ each release from the Conventional Commits: do not edit it by hand.
 - Cloud transport: the official open data of the TaM (GTFS and GTFS-RT), no account and no key; the timetable downloaded once a day when it changed and kept in /data, the real time of every followed stop in one request every 30 seconds to 5 minutes, the alerts every 5 minutes.
 - English, French, German and Spanish everywhere: settings, devices, widgets, scenes and documentation.
 
+[0.2.0]: https://github.com/William-De71/gladys-tam-montpellier/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/William-De71/gladys-tam-montpellier/releases/tag/v0.1.0
