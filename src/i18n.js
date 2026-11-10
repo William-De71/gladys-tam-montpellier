@@ -12,7 +12,7 @@
 // -----------------------------------------------------------------------------
 
 import { minutesLeft } from './departures.js';
-import { formatTime } from './time.js';
+import { formatTime, localClock, serviceDay } from './time.js';
 
 const LANGUAGES = ['en', 'fr', 'de', 'es'];
 // The brand of the network, in device names and summaries.
@@ -87,6 +87,12 @@ const TEXTS = {
     fr: '{n} min',
     de: '{n} Min.',
     es: '{n} min',
+  },
+  tomorrowTime: {
+    en: 'tomorrow {time}',
+    fr: 'demain {time}',
+    de: 'morgen {time}',
+    es: 'mañana {time}',
   },
   approaching: {
     en: 'Approaching',
@@ -293,12 +299,6 @@ const TEXTS = {
     fr: 'TaM · mis à jour à {time}',
     de: 'TaM · aktualisiert um {time}',
     es: 'TaM · actualizado a las {time}',
-  },
-  minutesShort: {
-    en: 'min',
-    fr: 'min',
-    de: 'Min.',
-    es: 'min',
   },
   moreInfo: {
     en: 'More information',
@@ -599,8 +599,37 @@ function passageWhen(passage, { language, now, timeZone }) {
 }
 
 /**
+ * @description The clock time of a passage, with its day when it belongs to
+ * a later service day: "10:32", "tomorrow 04:50", "Mon 05:10". A night
+ * passage at 00:30 of the same service day stays "00:30".
+ * @param {number} instant - The passage (ms).
+ * @param {object} options - `{ language, now, timeZone }`.
+ * @returns {string} The time.
+ */
+function clockText(instant, { language, now, timeZone }) {
+  const time = formatTime(instant, timeZone);
+  if (serviceDay(instant, timeZone) === serviceDay(now, timeZone)) {
+    return time;
+  }
+  const dayOf = (at) => Date.parse(`${localClock(at, timeZone).date}T00:00:00Z`);
+  const days = Math.round((dayOf(instant) - dayOf(now)) / (24 * 3600 * 1000));
+  if (days <= 0) {
+    // 05:00 seen at 02:00: another service day, but today on the clock.
+    return time;
+  }
+  if (days === 1) {
+    return t('tomorrowTime', language, { time });
+  }
+  const day = new Intl.DateTimeFormat(isLanguage(language) ? language : 'en', {
+    timeZone,
+    weekday: 'short',
+  }).format(new Date(instant));
+  return `${day} ${time}`;
+}
+
+/**
  * @description The short time of a passage, as on the screens of the stops:
- * "3 min", "10:32", "Approaching".
+ * "3 min", "10:32", "tomorrow 04:50", "Approaching".
  * @param {object} passage - The passage.
  * @param {object} options - `{ language, now, timeZone }`.
  * @returns {string} The time.
@@ -608,7 +637,7 @@ function passageWhen(passage, { language, now, timeZone }) {
 function passageShort(passage, { language, now, timeZone }) {
   const minutes = minutesLeft(passage, now);
   if (minutes >= 60) {
-    return formatTime(passage.at, timeZone);
+    return clockText(passage.at, { language, now, timeZone });
   }
   return minutes === 0 ? t('approaching', language) : t('minutesValue', language, { n: minutes });
 }
@@ -644,6 +673,7 @@ export {
   lineLabel,
   lineDeviceName,
   passageWhen,
+  clockText,
   passageShort,
   passageText,
 };

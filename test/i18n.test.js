@@ -208,7 +208,6 @@ test('runtime labels fit the widget bounds: badges 16, rows 40, link labels 24, 
       `cancelled.${language}`,
     );
     assert.ok(TEXTS.moreInfo[language].length <= 24, `moreInfo.${language}`);
-    assert.ok(TEXTS.minutesShort[language].length <= 6, `minutesShort.${language}`);
     assert.ok(t('minutesValue', language, { n: 59 }).length <= 16, `minutesValue.${language}`);
   }
 });

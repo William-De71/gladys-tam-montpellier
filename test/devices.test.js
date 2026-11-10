@@ -178,6 +178,14 @@ test('stop states: the next passage, the two waits and the delay', () => {
     ['next', 'wait'],
   );
   assert.equal(scheduled[0].text, '1 → Mosson · 5 min (timetable)');
+  // A first trip of the next service day says its day, like the widget.
+  const morning = buildStopStates(
+    fakeGladys,
+    COMEDIE_1,
+    [passage({ time: '28:50', realtime: false })],
+    { language: 'fr', now: NOW, timeZone: TZ },
+  );
+  assert.equal(morning[0].text, '1 → Mosson · demain 04:50 (théorique)');
   // Nothing announced: the waits are left untouched.
   const empty = buildStopStates(fakeGladys, GARE, [], { language: 'es', now: NOW });
   assert.deepEqual(

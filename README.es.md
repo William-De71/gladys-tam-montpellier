@@ -72,7 +72,7 @@ Solo cloud (`"transports": ["cloud"]`): el catálogo muestra la insignia cloud. 
 | TaM tranvía / línea | Tráfico                      | `text` / `text`              | «Tráfico alterado: La ligne 17 est déviée.»       |
 | TaM tranvía / línea | Avisos de tráfico en curso   | `counter-sensor` / `integer` | 0 … 20                                            |
 
-Sin salidas en las próximas tres horas, la parada muestra la primera salida de la mañana; el retraso solo se publica para una salida seguida en tiempo real.
+Sin salidas en las próximas tres horas, la parada muestra la primera salida de la mañana, con su día («1 → Mosson · mañana 04:50 (teórico)»); el retraso solo se publica para una salida seguida en tiempo real.
 
 ## Disparadores, acciones y widgets
 

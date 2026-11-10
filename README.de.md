@@ -72,7 +72,7 @@ Nur Cloud (`"transports": ["cloud"]`): Der Katalog zeigt das Cloud-Abzeichen. Di
 | TaM Tram / Linie    | Verkehrslage                       | `text` / `text`              | „Gestörter Betrieb: La ligne 17 est déviée.“        |
 | TaM Tram / Linie    | Aktuelle Verkehrsmeldungen         | `counter-sensor` / `integer` | 0 … 20                                              |
 
-Ohne Abfahrt in den nächsten drei Stunden zeigt die Haltestelle die erste Abfahrt am Morgen; die Verspätung wird nur für eine in Echtzeit verfolgte Abfahrt veröffentlicht.
+Ohne Abfahrt in den nächsten drei Stunden zeigt die Haltestelle die erste Abfahrt am Morgen, mit ihrem Tag („1 → Mosson · morgen 04:50 (Fahrplan)“); die Verspätung wird nur für eine in Echtzeit verfolgte Abfahrt veröffentlicht.
 
 ## Szenen-Auslöser, Aktionen und Widgets
 

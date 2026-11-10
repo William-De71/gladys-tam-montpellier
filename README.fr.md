@@ -72,7 +72,7 @@ Cloud uniquement (`"transports": ["cloud"]`) : le catalogue affiche le badge clo
 | TaM tram / ligne | Trafic                      | `text` / `text`              | « Trafic perturbé : La ligne 17 est déviée. »      |
 | TaM tram / ligne | Infos trafic en cours       | `counter-sensor` / `integer` | 0 … 20                                             |
 
-Sans départ dans les trois heures, l’arrêt donne le premier départ du matin ; le retard n’est publié que pour un départ suivi en temps réel.
+Sans départ dans les trois heures, l’arrêt donne le premier départ du matin, avec son jour (« 1 → Mosson · demain 04:50 (théorique) ») ; le retard n’est publié que pour un départ suivi en temps réel.
 
 ## Déclencheurs, actions et widgets
 

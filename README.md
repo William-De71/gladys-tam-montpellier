@@ -72,7 +72,7 @@ Cloud only (`"transports": ["cloud"]`): the catalog shows the cloud badge. The i
 | TaM tram / line | Traffic                      | `text` / `text`              | "Disrupted traffic: La ligne 17 est déviée." |
 | TaM tram / line | Traffic messages under way   | `counter-sensor` / `integer` | 0 … 20                                       |
 
-Without any departure in the next three hours, the stop shows the first departure of the morning; the delay is published only for a departure followed in real time.
+Without any departure in the next three hours, the stop shows the first departure of the morning, with its day ("1 → Mosson · tomorrow 04:50 (timetable)"); the delay is published only for a departure followed in real time.
 
 ## Scene triggers, actions and widgets
 

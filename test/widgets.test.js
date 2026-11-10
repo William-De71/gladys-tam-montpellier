@@ -60,10 +60,10 @@ test('departures widget: one compact row per route, soonest first, in every lang
   assert.deepEqual(
     fr.components[2].items.map((item) => [item.label, item.value]),
     [
-      ['1 → Occitanie', 'À l’approche · 15 · 30 · 45 min'],
-      ['1 → Gare Sud France', '7 · 20 · 35 · 50 min'],
-      ['2 → Jacou', '9 · 38 min · 23:53 · 00:23'],
-      ['3 → Juvignac', '15 · 45 min · 00:00 · 00:30'],
+      ['1 → Occitanie', 'À l’approche · 15 min'],
+      ['1 → Gare Sud France', '7 min · 20 min'],
+      ['2 → Jacou', '9 min · 38 min'],
+      ['3 → Juvignac', '15 min · 45 min'],
     ],
   );
 });
@@ -95,10 +95,82 @@ test('departures widget: a cancelled trip and a late one colour their row', () =
   );
 });
 
+test('departures widget: the two next trips, the cancellations of the hour, the colour of what is shown', () => {
+  const rows = (passages) =>
+    buildDeparturesWidget({
+      title: 'Comédie',
+      passages: passages.sort((a, b) => a.at - b.at),
+      readAt: NOW,
+      count: 6,
+      language: 'fr',
+      now: NOW,
+      timeZone: TZ,
+    }).components[2].items.map((item) => [item.label, item.value, item.color]);
+  // A cancellation after the two next trips is shown: it explains the orange.
+  assert.deepEqual(
+    rows([
+      passage({ time: '22:50' }),
+      passage({ time: '23:00' }),
+      passage({ time: '23:10', cancelled: true }),
+    ]),
+    [['1 → Mosson', '5 min · 15 min · supprimé 23:10', 'warning']],
+  );
+  // A cancellation between two trips does not hide the second one.
+  assert.deepEqual(
+    rows([
+      passage({ time: '22:50' }),
+      passage({ time: '23:00', cancelled: true }),
+      passage({ time: '23:10' }),
+    ]),
+    [['1 → Mosson', '5 min · supprimé 23:00 · 25 min', 'warning']],
+  );
+  // Beyond the hour, the same service day: still two trips.
+  assert.deepEqual(rows([passage({ time: '23:55' }), passage({ time: '24:05' })]), [
+    ['1 → Mosson', '23:55 · 00:05', 'success'],
+  ]);
+  // Too long for one line: the trip after the next goes first, then the
+  // latest cancellations; the next trip that runs always stays.
+  const far = (fields) => passage({ destination: 'Gare Sud France', ...fields });
+  assert.deepEqual(
+    rows([
+      far({ time: '22:47', cancelled: true }),
+      far({ time: '22:48', cancelled: true }),
+      far({ time: '22:51' }),
+      far({ time: '23:05' }),
+    ]),
+    [['1 → Gare Sud France', 'supprimé 22:47 · 6 min', 'warning']],
+  );
+  // A row cut down to its next trip is no longer orange for what it hides.
+  const longest = (fields) =>
+    passage({ destination: 'Saint-Jean-de-Védas Centre — Parc relais', ...fields });
+  assert.deepEqual(
+    rows([longest({ time: '22:48', cancelled: true }), longest({ time: '22:51' })]).map(
+      ([, value, color]) => [value, color],
+    ),
+    [['6 min', 'success']],
+  );
+});
+
 test('departures widget: times beyond an hour, nothing announced', () => {
   const options = { language: 'en', now: NOW, timeZone: TZ };
   const late = [passage({ time: '22:50' }), passage({ time: '24:10', realtime: false })];
   assert.equal(routeValue(late, options), '5 min · 00:10');
+  // A night passage of the same service day stays a plain time; the next
+  // service day says its day, and only the next passage is shown then.
+  assert.equal(routeValue([passage({ time: '24:30' })], options), '00:30');
+  const timetable = (time) => passage({ time, realtime: false });
+  const morning = buildDeparturesWidget({
+    title: 'Château',
+    passages: [timetable('28:50'), timetable('29:20')],
+    readAt: NOW,
+    count: 6,
+    language: 'fr',
+    now: NOW,
+    timeZone: TZ,
+  });
+  assertValid(morning, 'tomorrow');
+  assert.equal(morning.components[2].items[0].value, 'demain 04:50');
+  assert.equal(routeValue([timetable('53:10')], options), 'Thu 05:10');
   const empty = buildDeparturesWidget({
     title: 'Château',
     passages: [],
